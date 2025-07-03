@@ -1,0 +1,25 @@
+using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace PF_TRANSFER_IN__REGISTER_FORMAT.Models
+{
+    public class PFSettlementModel
+    {
+        public int SrNo { get; set; }
+        public required  string EmpNo { get; set; }
+        public required string PF_Number { get; set; }
+        public required DateTime Date_Of_Transfer_In { get; set; }
+        public required string TRNS_Type { get; set; }
+        public DateTime? Date_Of_Joining_Prior { get; set; }
+        public required string Name_Of_Member { get; set; }
+        public required string Company_Name { get; set; }
+        public required string Trust_RPFC_Address { get; set; }
+        public required string From_PF_Account { get; set; }
+        public required string To_PF_Account { get; set; }
+        public required decimal Employee_Contb_Amount { get; set; }
+        public required decimal Employer_Contb_Amount { get; set; }
+        public decimal Total_Contb_Amount { get; set; }
+        public required string Status { get; set; }
+        public required string FI_Document_Number { get; set; }
+    }
+}
