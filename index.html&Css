@@ -1,0 +1,189 @@
+@if (Model == null || !Model.Any())
+{
+    <p style="color: red; font-weight: bold;">⚠ No data available! Please check the database or controller logic.</p>
+}
+
+@{
+    var media = ""; 
+}
+
+@{
+   @model List<PF_TRANSFER_IN__REGISTER_FORMAT.Models.PFSettlementModel>
+  
+   <div class="table-responsive">
+    <h2 class="text-center">PF Transfer In Register</h2>
+    <table id="pfTable" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Actions</th>
+                <th>SrNo</th>
+                <th>EmpNo</th>
+                <th>PF Number</th>
+                <th>Date of Transfer In</th>
+                <th>TRNS Type</th>
+                <th>Date of Joining Prior</th>
+                <th>Name of Member</th>
+                <th>Company Name</th>
+                <th>Trust/RPFC Address</th>
+                <th>From PF Account</th>
+                <th>To PF Account</th>
+                <th>Employee Contribution</th>
+                <th>Employer Contribution</th>
+                <th>Total Contribution</th>
+                <th>Status</th>
+                <th>FI Document Number</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <a class="btn custom-pdf-btn" href="@Url.Action("GeneratePdf", new { id = item.SrNo })">
+                            View PDF
+                        </a>
+                    </td>
+                    <td>@item.SrNo</td>
+                    <td>@item.EmpNo</td>
+                    <td>@item.PF_Number</td>
+                    <td>@item.Date_Of_Transfer_In.ToString("dd-MM-yyyy")</td>
+                    <td>@item.TRNS_Type</td>
+                    <td>@(item.Date_Of_Joining_Prior?.ToString("dd-MM-yyyy") ?? "N/A")</td>
+                    <td>@item.Name_Of_Member</td>
+                    <td>@item.Company_Name</td>
+                    <td>@item.Trust_RPFC_Address</td>
+                    <td>@item.From_PF_Account</td>
+                    <td>@item.To_PF_Account</td>
+                    <td>@item.Employee_Contb_Amount</td>
+                    <td>@item.Employer_Contb_Amount</td>
+                    <td>@(item.Total_Contb_Amount )</td>
+                    <td>@item.Status</td>
+                    <td>@item.FI_Document_Number</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    </div>
+
+  
+}
+<a class="btn btn-success" href="@Url.Action("ExportToExcel")">Export to Excel</a>
+ 
+
+<!-- jQuery and DataTables Integration -->
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" />
+
+    <script>
+               $(document).ready(function () {
+            $('#pfTable').DataTable({
+                "paging": true,
+                "pageLength": 5, 
+                "lengthChange": false,
+                "searching": true,
+                "ordering": false,
+                "info": true, 
+                "scrollX": true,
+                "autoWidth": false,
+                "columnDefs": [
+                    { "orderable": true, "targets": [0] },
+                    { "orderable": false, "targets": "_all" }
+                ],
+                "dom": '<"top"f>rt<"bottom"lp><"clear">'
+            });
+        });
+
+    </script>
+}
+<style>
+    html{
+        font-size: 14px;
+    }
+
+    @media (min-width: 768px) {
+        html:
+        font-size: 16px;
+    }
+
+    .btn:focus, .btn:active:focus, .btn-link.nav-link:focus,
+    .form-control:focus, .form-check-input:focus {
+        box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    }
+
+    html {
+        position: relative;
+        min-height: 100%;
+    }
+
+    body {
+        margin-bottom: 60px;
+        background-color: #f8f9fa;
+    }
+
+    .table thead {
+        background-color: #374151;
+        color: white; 
+    }
+
+    .dataTables_filter {
+        margin-bottom: 20px !important;
+        display: block !important;
+    }
+
+    .table-bordered {
+        border: 1px solid #dee2e6 !important;
+    }
+
+    /*search box */
+    .dataTables_filter input {
+        padding: 8px !important;
+        border-radius: 5px !important;
+        border: 1px solid #ccc !important;
+    }
+
+    /*Table Styles */
+    .custom-table {
+        background-color: #ffffff; 
+        border: 1px solid #dee2e6;
+    }
+   .custom-table tbody tr:nth-child(even) 
+   {
+      background-color: #f2f2f2;
+   }
+
+   .custom-table tbody tr:nth-child(odd)
+   {
+      background-color: #ffffff; 
+   }
+
+    .custom-pdf-btn {
+        font-weight: bold !important;
+        border: 1px solid #ccc !important;
+    }
+
+    .custom-pdf-btn:hover {
+        background-color: #ddd !important;
+    }
+
+    /*Horizontal Line Below Table */
+    .table-hr {
+        border: 1px solid #007bff;
+        margin-top: 10px;
+    }
+
+    .table-responsive {
+        width: 100%;
+        overflow-x: auto;
+        margin-bottom: 10px; 
+    }
+
+    .custom-table {
+        width: 100%;
+        white-space: nowrap; 
+    }
+</style>
+
+
+
